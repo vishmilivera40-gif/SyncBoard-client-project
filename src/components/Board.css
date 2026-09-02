@@ -1,0 +1,28 @@
+.board-container {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 25px;
+}
+.board-header h1 { color: #333; font-weight: 600; }
+.board-header h1 span { color: #667eea; }
+.board-header button {
+  padding: 10px 20px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.board-columns {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}

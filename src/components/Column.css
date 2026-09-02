@@ -1,0 +1,37 @@
+.column {
+  background: #ebecf0;
+  border-radius: 8px;
+  padding: 12px;
+  width: 32%;
+  min-height: 400px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px;
+  margin-bottom: 12px;
+}
+.column-header h3 {
+  font-weight: 600;
+  color: #172b4d;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.task-count {
+  background: #c1c7d0;
+  color: #172b4d;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
