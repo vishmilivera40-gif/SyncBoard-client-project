@@ -141,7 +141,7 @@ We have two collections.
 - Root Directory: syncboard-client
 - Build Command: npm install && npm run build
 - Publish Directory: build
-- Env var: REACT_APP_API_URL=https://syncboard-api-66.onrender.com
+- Env var: REACT_APP_API_URL=https://syncboard-client-66.onrender.com
 
 ## Team
 
