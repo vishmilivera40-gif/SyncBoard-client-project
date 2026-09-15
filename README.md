@@ -1,70 +1,169 @@
-# Getting Started with Create React App
+# SyncBoard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A collaborative task board for team projects. Built as part of our PUSL3120 final year project.
 
-## Available Scripts
+## Live Links
 
-In the project directory, you can run:
+- Frontend: https://syncboard-client-66.onrender.com
+- Backend: https://syncboard-api-66.onrender.com
+- Health check: https://syncboard-api-66.onrender.com/api/health
 
-### `npm start`
+Note: The backend is on Render's free tier, so it might take about 30 seconds to wake up if it has been idle.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## What it does
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+SyncBoard is a Kanban-style board where a team can manage tasks together.
 
-### `npm test`
+Tasks can be created with a title, description, assignee and priority. They can be moved between To Do, Doing and Done, edited, deleted, and updated in real time for everyone else on the board.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+We also added login and registration using JWT, search and filter, activity log, dark mode, offline support for drafts using localStorage, and a responsive layout.
 
-### `npm run build`
+## Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Frontend: React
+- Backend: Node.js and Express
+- Database: MongoDB Atlas with Mongoose
+- Real-time: Socket.io
+- Auth: JWT and bcryptjs
+- Testing: Jest, Supertest, React Testing Library
+- CI: GitHub Actions
+- Docker: Dockerfile and docker-compose
+- Hosting: Render
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How to Run Locally
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You need Node.js, npm and either a MongoDB Atlas account or local MongoDB.
 
-### `npm run eject`
+### Backend
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Open a terminal and run:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+cd server
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Create a .env file inside server folder with:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+MONGODB_URI=your_mongodb_connection_string
+PORT=5000
+JWT_SECRET=your_secret_key
 
-## Learn More
+Then start it:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+npm run dev
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Backend runs on http://localhost:5000
 
-### Code Splitting
+### Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Open a new terminal and run:
 
-### Analyzing the Bundle Size
+cd syncboard-client
+npm install
+npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Frontend runs on http://localhost:3000
 
-### Making a Progressive Web App
+### Docker (optional)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+From the root folder run:
 
-### Advanced Configuration
+docker-compose up --build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Running Tests
 
-### Deployment
+### Server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+cd server
+npm test
 
-### `npm run build` fails to minify
+### Client
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+cd syncboard-client
+npm test -- --watchAll=false
+
+### CI
+
+Every push to main runs the tests through GitHub Actions.
+
+## API Endpoints
+
+### Auth
+
+- POST /api/auth/register - Create a new account
+- POST /api/auth/login - Login
+- GET /api/auth/me - Get current user
+
+### Tasks
+
+- GET /api/tasks - Get all tasks
+- GET /api/tasks/:id - Get one task
+- POST /api/tasks - Create a task
+- PUT /api/tasks/:id - Update a task
+- PATCH /api/tasks/:id/move - Move a task
+- DELETE /api/tasks/:id - Delete a task
+
+### Health
+
+- GET /api/health
+
+## Database
+
+We have two collections.
+
+### Task
+
+- title (String, required)
+- description (String)
+- status (todo / doing / done)
+- assignee (String)
+- priority (Low / Medium / High)
+- createdAt, updatedAt (auto)
+
+### User
+
+- name (String, required)
+- email (String, required, unique)
+- password (String, hashed)
+- role (admin / member / viewer)
+- createdAt
+
+## Deployment
+
+### Backend on Render
+
+- Root Directory: server
+- Build Command: npm install
+- Start Command: npm start
+- Env vars: MONGODB_URI, JWT_SECRET, NODE_ENV=production, PORT=5000
+
+### Frontend on Render
+
+- Root Directory: syncboard-client
+- Build Command: npm install && npm run build
+- Publish Directory: build
+- Env var: REACT_APP_API_URL=https://syncboard-api-66.onrender.com
+
+## Team
+
+Group 66. Full list in CONTRIBUTORS.md
+
+## Known Limitations
+
+- Free tier backend sleeps after 15 min of inactivity
+- No file uploads yet
+- No password reset or email verification
+- No user roles UI (schema supports it but UI doesn't)
+- Real-time updates work only within the same session
+
+## Future Improvements
+
+- User roles and admin panel
+- Analytics dashboard
+- Task comments
+- File attachments
+- PWA support
+- Password reset
+
+## License
+
+Made for PUSL3120 module.
